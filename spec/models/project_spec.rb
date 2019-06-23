@@ -50,4 +50,21 @@ RSpec.describe Project, type: :model do
 
 		expect(other_project).to be_valid
 	end
+
+	it "is invalid without project name" do
+
+		user = User.create(
+			 first_name: "Joe",
+			 last_name: "Tester",
+			 email: "joetester@example.com",
+			 password: "dottle-nouveau-pavilion-tights-furze",
+		)
+
+		project = user.projects.new(
+			name: nil,
+		)
+
+		project.valid?
+		expect(project.errors[:name]).to include("can't be blank")
+	end
 end
